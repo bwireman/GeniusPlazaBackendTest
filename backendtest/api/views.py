@@ -9,7 +9,8 @@ from django.views.generic import View
 from rest_framework.views import APIView
 import json
 from django.forms.models import model_to_dict
-
+from rest_framework import generics
+from rest_framework import serializers as rest_serialzers
 
 def serializeAndHttpFormat(objects):
     return  HttpResponse(serializers.serialize('json', objects), content_type="application/json")
@@ -108,4 +109,20 @@ class IngredientsView(APIView):
 
         return serializeAndHttpFormat(Ingredient.objects.all())
 
-    
+
+
+class UserSerializer(rest_serialzers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "password")
+
+
+class UserView(generics.ListCreateAPIView):
+    """This class defines the create behavior of our rest api."""
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+    def perform_create(self, serializer):
+        """Save the post data when creating a new bucketlist."""
+        serializer.save()
