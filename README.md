@@ -32,3 +32,6 @@ recipes, update a recipe, delete a particular recipe
 - /api/ingredient
   - GET: all steps id=<ingredient_id> for a specific
   - POST: post a new ingredient
+  
+- /api/user
+  - Defualt create view from DJANGORESTFRAMEWORK
